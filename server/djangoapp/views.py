@@ -19,6 +19,7 @@ logger = logging.getLogger(__name__)
 
 # Create your views here.
 
+
 # Create a `login_request` view to handle sign in request
 @csrf_exempt
 def login_user(request):
@@ -67,10 +68,10 @@ def registration(request):
     if not username_exist:
         # Create user in auth_user table
         user = User.objects.create_user(
-            username=username, 
-            first_name=first_name, 
+            username=username,
+            first_name=first_name,
             last_name=last_name,
-            password=password, 
+            password=password,
             email=email)
         # Login the user and redirect to list page
         login(request, user)
@@ -90,6 +91,7 @@ def get_dealerships(request, state="All"):
     dealerships = get_request(endpoint)
     return JsonResponse({"status": 200, "dealers": dealerships})
 
+
 # Create a `get_dealer_details` view to render the dealer details
 def get_dealer_details(request, dealer_id):
     if(dealer_id):
@@ -98,6 +100,7 @@ def get_dealer_details(request, dealer_id):
         return JsonResponse({"status": 200, "dealer": dealership})
     else:
         return JsonResponse({"status": 400, "message": "Bad Request"})
+
 
 # Create a `add_review` view to submit a review
 def add_review(request):
@@ -109,7 +112,8 @@ def add_review(request):
         except:
             return JsonResponse({"status": 401, "message": "Error in posting review"})
     else:
-        return JsonResponse({"status":403, "message": "Unauthorized"})
+        return JsonResponse({"status": 403, "message": "Unauthorized"})
+
 
 #Get Cars method
 def get_cars(request):
@@ -121,7 +125,8 @@ def get_cars(request):
     cars = []
     for car_model in car_models:
         cars.append({"CarModel": car_model.name, "CarMake": car_model.car_make.name})
-    return JsonResponse({"CarModels":cars})
+    return JsonResponse({"CarModels": cars})
+
 
 def get_dealer_reviews(request, dealer_id):
     # if dealer id has been provided
